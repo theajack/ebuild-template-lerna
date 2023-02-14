@@ -1,5 +1,12 @@
+/*
+ * @Author: tackchen
+ * @Date: 2022-10-23 20:12:31
+ * @Description: Coding something
+ */
+const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const rootPkg = require('../../package.json');
 
 function resolveRootPath (str) {
     return path.resolve(__dirname, `../../${str}`);
@@ -10,7 +17,7 @@ function resolvePacakgePath (str) {
 }
 
 function extrackSinglePackageInfo (dir) {
-    const {name, version, dependencies} = require(resolvePacakgePath(`${dir}/package.json`));
+    const { name, version, dependencies } = require(resolvePacakgePath(`${dir}/package.json`));
     return {
         name,
         version,
@@ -30,13 +37,21 @@ function upcaseFirstLetter (str) {
 }
 
 function buildPackageName (dir) {
-    return `lerna-demo${dir === 'main' ? '' : `-${dir}`}`;
+    return `webos-${dir}`;
+}
+
+function traverseDir (path, callback) {
+    const dirs = fs.readdirSync(path);
+
+    dirs.forEach((dir) => {
+        if (dir === '.DS_Store') return;
+
+        callback(dir);
+    });
 }
 
 function initPackageInfo (isDev) {
-    const dirs = fs.readdirSync(resolveRootPath('packages'));
-
-    dirs.forEach((dir) => {
+    traverseDir(resolveRootPath('packages'), (dir) => {
         initSinglePackageInfo(dir, isDev);
     });
 }
@@ -50,18 +65,25 @@ function initSinglePackageInfo (dir, isDev = false) {
         package.main = 'src/index.ts';
         package.typings = 'src/index.ts';
     } else {
-        package.main = `dist/${packageName}.min.js`;
+        package.main = `dist/${packageName}.esm.js`;
         package.typings = `dist/${packageName}.d.ts`;
+        package.unpkg = `dist/${packageName}.min.js`;
+        package.jsdelivr = `dist/${packageName}.min.js`;
     }
+    [ 'description', 'author', 'repository', 'license' ].forEach(name => {
+        package[name] = rootPkg[name];
+    });
     package.publishConfig = {
         registry: 'https://registry.npmjs.org/',
     };
     writeJsonIntoFile(package, packagePath);
     fs.copyFileSync(resolveRootPath('README.md'), resolvePacakgePath(`${dir}/README.md`));
+    fs.copyFileSync(resolveRootPath('LICENSE'), resolvePacakgePath(`${dir}/LICENSE`));
     fs.copyFileSync(resolveRootPath('scripts/helper/.npmignore'), resolvePacakgePath(`${dir}/.npmignore`));
 
     const tsconfig = require(resolveRootPath('tsconfig.json'));
-    tsconfig.include = ['src/**/*'];
+    tsconfig.include = [ 'src/**/*' ];
+    tsconfig.compilerOptions.rootDir = '../..';
     writeJsonIntoFile(tsconfig, resolvePacakgePath(`${dir}/tsconfig.json`));
 }
 
@@ -73,6 +95,21 @@ function writeStringIntoFile (str, filePath) {
     fs.writeFileSync(filePath, str, 'utf8');
 }
 
+async function exec (cmd) {
+    return new Promise(resolve => {
+        childProcess.exec(cmd, function (error, stdout, stderr) {
+            if (error) {
+                resolve({ success: false, stdout, stderr });
+            } else {
+                resolve({
+                    success: true,
+                    stdout,
+                    stderr
+                });
+            }
+        });
+    });
+}
 module.exports = {
     extrackSinglePackageInfo,
     resolveRootPath,
@@ -84,4 +121,6 @@ module.exports = {
     initSinglePackageInfo,
     writeJsonIntoFile,
     writeStringIntoFile,
+    traverseDir,
+    exec,
 };

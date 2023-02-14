@@ -1,13 +1,18 @@
-const {build} = require('esbuild');
-const {resolve} = require('path');
-const {yamlPlugin} = require('esbuild-plugin-yaml');
-const {dtsPlugin} = require('esbuild-plugin-d.ts');
+/*
+ * @Author: chenzhongsheng
+ * @Date: 2023-02-14 08:06:30
+ * @Description: Coding something
+ */
+const { build } = require('esbuild');
+const { resolve } = require('path');
+const { yamlPlugin } = require('esbuild-plugin-yaml');
+const { dtsPlugin } = require('esbuild-plugin-d.ts');
 const vuePlugin = require('esbuild-plugin-vue3');
 
 const outfile = resolve(__dirname, './dev/bundle.js');
 
 build({
-    entryPoints: [resolve(__dirname, './dev/index.ts')],
+    entryPoints: [ resolve(__dirname, './dev/index.ts') ],
     outfile,
     bundle: true,
     sourcemap: true,

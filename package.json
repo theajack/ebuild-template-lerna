@@ -10,10 +10,11 @@
     "_dev": "node scripts/dev.js",
     "_serve": "serve scripts/dev",
     "dev": "run-p _dev _serve",
-    "build": "lerna run build",
+    "build": "npm run init:monorepo && lerna run build && node scripts/build/mod-package.js",
     "publish": "node ./scripts/push-release.js",
     "info": "node ./scripts/info.js",
     "init:package": "node ./scripts/init-packages-info.js",
+    "init:monorepo": "node ./scripts/init-packages-info.js dev",
     "init:dev-package": "node ./scripts/init-packages-info.js dev",
     "init:dep": "node scripts/init-learn-dep.js"
   },
