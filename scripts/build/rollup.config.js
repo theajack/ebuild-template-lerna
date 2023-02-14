@@ -49,7 +49,7 @@ const createBaseConfig = ({
         output: {
             file: resolvePacakgePath(`${dirName}/dist/${bundleName}`),
             format,
-            name: `Webos${isMainPackage ? '' : upcaseFirstLetter(dirName)}`,
+            name: `Demo${isMainPackage ? '' : upcaseFirstLetter(dirName)}`,
             // sourcemap: true,
         },
         plugins: [

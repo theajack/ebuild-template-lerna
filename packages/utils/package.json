@@ -2,8 +2,8 @@
     "name": "@lerna-demo/utils",
     "version": "0.0.1",
     "description": "lerna demo",
-    "main": "src/index.ts",
-    "typings": "src/index.ts",
+    "main": "dist/demo-utils.esm.js",
+    "typings": "dist/demo-utils.d.ts",
     "repository": "git@github.com:theajack/ebuild-template-lerna.git",
     "author": "tackchen <theajack@qq.com>",
     "scripts": {
@@ -11,9 +11,10 @@
     },
     "license": "",
     "type": "module",
-    "dependencies": {
-    },
+    "dependencies": {},
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
-    }
+    },
+    "unpkg": "dist/demo-utils.min.js",
+    "jsdelivr": "dist/demo-utils.min.js"
 }

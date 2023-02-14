@@ -37,7 +37,7 @@ function upcaseFirstLetter (str) {
 }
 
 function buildPackageName (dir) {
-    return `webos-${dir}`;
+    return `demo-${dir}`;
 }
 
 function traverseDir (path, callback) {
