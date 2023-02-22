@@ -28,9 +28,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ steps.npm-cache.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-node-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Npm Install pnpm
         run: npm install -g pnpm
@@ -79,10 +79,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-      # - name: Publish # npm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
-      #   run: npm run eb:publish -- ${{ steps.version.outputs.version }}
-      
       - name: Purge # purge cdn
         run: npm run eb:purge -- ${{ steps.version.outputs.version }}
