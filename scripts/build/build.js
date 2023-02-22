@@ -5,13 +5,15 @@
  */
 
 const execa = require('execa');
-const { resolveRootPath } = require('./utils');
+const { afterBuild } = require('../build.config');
+const { resolveRootPath } = require('../helper/utils');
 
 const dirName = process.argv[2];
 
 console.log(`dirName=${dirName}`);
 
 async function build () {
+    // if (dirName !== 'test') return;
     await execa(
         resolveRootPath('node_modules/rollup/dist/bin/rollup'),
         [
@@ -20,6 +22,7 @@ async function build () {
             '--environment',
             [
                 `PACKAGE_NAME:${dirName}`,
+                `NODE_ENV:production`,
             ],
         ],
         { stdio: 'inherit' },
@@ -28,8 +31,7 @@ async function build () {
 
 async function main () {
     await build();
-    // ! 下面的逻辑放在 scripts 后面的步骤里做 否则会build失败
-    // initSinglePackageInfo(dirName, false);
+    await afterBuild(dirName);
 }
 
 main();

@@ -8,12 +8,15 @@
   "scripts": {
     "lint": "eslint packages --ext ts",
     "_dev": "node scripts/dev.js",
-    "_serve": "serve scripts/dev",
+    "_serve": "npx nodemon scripts/dev/bundle.js --ignore ./SenerData",
     "dev": "run-p _dev _serve",
     "build": "npm run init:dev && lerna run build && node scripts/build/mod-package.js",
-    "publish": "node ./scripts/push-release.js",
+    "release": "node ./scripts/push-release.js",
     "info": "node ./scripts/info.js",
     "boot": "lerna bootstrap",
+    "create": "node scripts/create-rep.js",
+    "install": "node scripts/install-dep.js",
+    "build:docs": "node scripts/docs/build-docs.js",
     "init:package": "node ./scripts/init-packages-info.js",
     "init:dev": "node ./scripts/init-packages-info.js dev",
     "init:dep": "node scripts/init-learn-dep.js"

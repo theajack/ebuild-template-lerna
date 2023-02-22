@@ -1,5 +1,5 @@
 {
-  "@lerna-demo/main": [
-    "@lerna-demo/main-utils"
+  "sener": [
+    "sener-utils"
   ]
 }
