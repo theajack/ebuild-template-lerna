@@ -6,7 +6,7 @@
 
 const rootPkg = require('../../package.json');
 const { copyFile, traverseDir, resolveRootPath } = require('../helper/utils');
-const { name, handlerBuildPackage, packageMain, packageModule, packageCDN } = require('../build.config');
+const { name, handlerBuildPackage, packageMain, packageModule } = require('../build.config');
 
 function buildPackageName (dir) {
     if (!dir) return name;
@@ -26,15 +26,10 @@ function initSinglePackageInfo (dir, isDev = false) {
                 package.main = `dist/${packageName}.${packageMain || 'iife'}.js`;
                 package.module = `dist/${packageName}.${packageModule || 'esm'}.js`;
                 package.typings = `dist/${packageName}.d.ts`;
-                if (packageCDN) {
-                    package.unpkg = `dist/${packageName}.${packageCDN}.js`;
-                    package.jsdelivr = `dist/${packageName}.${packageCDN}.js`;
-                }
                 if (handlerBuildPackage) handlerBuildPackage(package, packageName);
-
             }
             [
-                'description', 'author', 'version', 'repository',
+                'description', 'author', 'repository',
                 'license', 'publishConfig'
             ].forEach(name => {
                 package[name] = rootPkg[name];
