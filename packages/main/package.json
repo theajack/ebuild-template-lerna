@@ -2,15 +2,14 @@
     "name": "@lerna-demo/main",
     "version": "0.0.1",
     "description": "lerna demo",
-    "main": "dist/demo-main.esm.js",
-    "typings": "dist/demo-main.d.ts",
+    "main": "src/index.ts",
+    "typings": "src/index.ts",
     "repository": "git@github.com:theajack/ebuild-template-lerna.git",
     "author": "tackchen <theajack@qq.com>",
     "scripts": {
         "build": "node ../../scripts/build/build.js main"
     },
-    "license": "",
-    "type": "module",
+    "license": "MIT",
     "dependencies": {
         "@lerna-demo/utils": "^0.0.1"
     },

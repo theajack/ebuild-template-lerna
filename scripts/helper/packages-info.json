@@ -1,26 +1,15 @@
 [
     {
-        "name": "sener-json",
-        "version": "0.0.4",
+        "name": "@lerna-demo/main",
+        "version": "0.0.1",
         "dependencies": [
-            "sener-types"
+            "@lerna-demo/utils"
         ]
     },
     {
-        "name": "sener",
-        "version": "0.0.4",
+        "name": "@lerna-demo/utils",
+        "version": "0.0.1",
         "dependencies": [
-            "sener-types"
         ]
-    },
-    {
-        "name": "sener-static",
-        "version": "0.0.4",
-        "dependencies": []
-    },
-    {
-        "name": "sener-types",
-        "version": "0.0.4",
-        "dependencies": []
     }
 ]

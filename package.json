@@ -6,9 +6,9 @@
   "repository": "git@github.com:theajack/ebuild-template-lerna.git",
   "author": "tackchen <theajack@qq.com>",
   "scripts": {
-    "lint": "eslint packages --ext ts",
+    "lint": "eslint src --ext ts",
     "_dev": "node scripts/dev.js",
-    "_serve": "npx nodemon scripts/dev/bundle.js --ignore ./SenerData",
+    "_serve": "serve scripts/dev",
     "dev": "run-p _dev _serve",
     "build": "npm run init:dev && lerna run build && node scripts/build/mod-package.js",
     "release": "node ./scripts/push-release.js",
